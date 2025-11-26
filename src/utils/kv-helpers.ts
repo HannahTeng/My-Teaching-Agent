@@ -96,4 +96,14 @@ export class KVHelpers {
   async getList(listKey: string): Promise<string[]> {
     return await this.getJSON<string[]>(listKey) || [];
   }
+
+  /**
+   * Clear all user data
+   */
+  async clearAllUsers(): Promise<void> {
+    console.log('Clearing all user data...');
+    await this.deleteByPrefix('user:');
+    await this.deleteByPrefix('users:');
+    console.log('User data cleared');
+  }
 }

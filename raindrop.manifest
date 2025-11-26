@@ -5,7 +5,7 @@
 
 application "teaching-agent-app" {
 
-  service "teacher" {
+  service "user" {
     visibility = "public"
   }
 

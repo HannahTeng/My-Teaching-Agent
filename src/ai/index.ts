@@ -1,10 +1,6 @@
 import { Service } from '@liquidmetal-ai/raindrop-framework';
 import { Hono } from 'hono';
-import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
-import { QueueSendOptions } from '@liquidmetal-ai/raindrop-framework';
-import { KvCachePutOptions, KvCacheGetOptions } from '@liquidmetal-ai/raindrop-framework';
-import { BucketPutOptions, BucketListOptions } from '@liquidmetal-ai/raindrop-framework';
 import { Env } from '../utils/raindrop.gen';
 
 // Create Hono app with middleware

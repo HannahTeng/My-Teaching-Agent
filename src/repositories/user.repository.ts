@@ -4,6 +4,18 @@ import { KVCache } from '../utils/kv-helpers';
 import { validateEmail, validateUsername } from '../utils/validators';
 import { BaseRepository } from './base';
 
+/**
+ * KV Key Structure:
+ * - user:{userId}                      → User object
+ * - user:email:{email}                 → userId (for login/lookup)
+ * - user:username:{username}           → userId (for username uniqueness)
+ * - user:{userId}:knowledges           → List of knowledge IDs (for teachers)
+ * - user:{userId}:enrollments          → List of knowledge IDs (for students)
+ * - user:{userId}:sessions             → List of session IDs (for students)
+ * - users:teachers                     → List of all teacher user IDs
+ * - users:students                     → List of all student user IDs
+ */
+
 export class UserRepository extends BaseRepository<User> {
   constructor(kvCache: KVCache) {
     super(kvCache);
@@ -48,7 +60,7 @@ export class UserRepository extends BaseRepository<User> {
     };
 
     await this.create(userId, user);
-
+    
     // Create email lookup index
     await this.kv.setJSON(
       this.buildKey('user', 'email', user.email),
@@ -125,8 +137,5 @@ export class UserRepository extends BaseRepository<User> {
     if (!userId) return null;
     return await this.getUserOrNull(userId);
   }
-
-
-
 
 }
