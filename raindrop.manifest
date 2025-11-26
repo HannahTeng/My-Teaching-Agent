@@ -1,0 +1,17 @@
+// Raindrop Manifest Template
+// This template shows examples of all available modules in Raindrop
+// Generated service handlers include Hono.js for HTTP services
+// Uncomment the modules you want to use in your application
+
+application "teaching-agent-app" {
+
+  service "teacher" {
+    visibility = "public"
+  }
+
+  service "ai" {
+    visibility = "public"
+  }
+
+  kv_cache "kv_cache" {}
+}
