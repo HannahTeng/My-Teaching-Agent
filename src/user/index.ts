@@ -1,4 +1,4 @@
-import { Service } from '@liquidmetal-ai/raindrop-framework';
+import { KvCacheGetOptions, KvCachePutOptions, Service } from '@liquidmetal-ai/raindrop-framework';
 import { Hono } from 'hono';
 import { logger } from 'hono/logger';
 import { Env } from '../utils/raindrop.gen';
@@ -11,13 +11,31 @@ app.use('*', logger());
 
 app.get('/api/user/:id', async (c) => {
   try {
-    const id = c.req.param('id');
-    const userRepository = new UserRepository(c.env.KV_CACHE);
-    const user = await userRepository.getUser(id);
+    // const id = c.req.param('id');
+    // const userRepository = new UserRepository(c.env.KV_CACHE);
+    // const user = await userRepository.getUser(id);
+    // return c.json({
+    //   success: true,
+    //   id,
+    //   user
+    // });
+    const key = c.req.param('id');
+    const cache = c.env.KV_CACHE;
+
+    const getOptions: KvCacheGetOptions<'json'> = {
+      type: 'json'
+    };
+
+    const value = await cache.get(key, getOptions);
+
+    if (value === null) {
+      return c.json({ error: 'Key not found in cache' }, 404);
+    }
+
     return c.json({
       success: true,
-      id,
-      user
+      key,
+      value
     });
   } catch (error) {
     return c.json({
@@ -27,19 +45,49 @@ app.get('/api/user/:id', async (c) => {
   }
 });
 
-app.post('/api/user', async (c) => {
+// app.post('/api/user', async (c) => {
+//   try {
+//     const userRepository = new UserRepository(c.env.KV_CACHE);
+//     const userInput = await c.req.json() as CreateUserInput;
+//     const user = await userRepository.createUser(userInput);
+//     return c.json({
+//       success: true,
+//       message: 'Create user successfully',
+//       user
+//     });
+//   } catch (error) {
+//     return c.json({
+//       error: 'Create user failed',
+//       message: error instanceof Error ? error.message : 'Unknown error'
+//     }, 500);
+//   }
+// });
+
+app.post('/api/cache', async (c) => {
   try {
-    const userRepository = new UserRepository(c.env.KV_CACHE);
-    const userInput = await c.req.json() as CreateUserInput;
-    const user = await userRepository.createUser(userInput);
+    const { key, value, ttl } = await c.req.json();
+
+    if (!key || value === undefined) {
+      return c.json({ error: 'key and value are required' }, 400);
+    }
+
+    const cache = c.env.KV_CACHE;
+
+    const putOptions: KvCachePutOptions = {};
+    if (ttl) {
+      putOptions.expirationTtl = ttl;
+    }
+
+    await cache.put(key, JSON.stringify(value), putOptions);
+
     return c.json({
       success: true,
-      message: 'Create user successfully',
-      user
+      message: 'Data cached successfully',
+      key
     });
   } catch (error) {
     return c.json({
-      error: 'Create user failed',
+      error: 'Cache put failed',
       message: error instanceof Error ? error.message : 'Unknown error'
     }, 500);
   }

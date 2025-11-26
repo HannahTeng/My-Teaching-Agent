@@ -24,11 +24,12 @@ export abstract class BaseRepository<T> {
   /**
    * Create a new entity
    */
-  async create(id: string, data: T): Promise<T> {
-    const key = this.buildKey(id);
-    await this.kv.setJSON(key, data);
-    return data;
-  }
+  // async create(id: string, data: T): Promise<T> {
+  //   const key = this.buildKey(id);
+  //   await this.kv.setJSON(key, data);
+  //   //return data;
+  //   await this.kv.put(id, data);
+  // }
 
   /**
    * Get an entity by ID
@@ -37,13 +38,4 @@ export abstract class BaseRepository<T> {
     const key = this.buildKey(id);
     return await this.kv.getJSON<T>(key);
   }
-
-
-
-
-
-
-
-
-
 }

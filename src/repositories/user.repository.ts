@@ -1,3 +1,4 @@
+import { KvCachePutOptions } from '@liquidmetal-ai/raindrop-framework';
 import { CreateUserInput, User, UserRole } from '../models/user.model';
 import { ConflictError, NotFoundError } from '../utils/errors';
 import { KVCache } from '../utils/kv-helpers';
@@ -59,8 +60,15 @@ export class UserRepository extends BaseRepository<User> {
       profile: input.profile || {},
     };
 
-    await this.create(userId, user);
-    
+    //await this.create(userId, user);
+    // await this.kv.put(userId, JSON.stringify(user));
+    const putOptions: KvCachePutOptions = {};
+    // if (ttl) {
+    //   putOptions.expirationTtl = ttl;
+    // }
+
+    await this.kv.put(userId, JSON.stringify(user), putOptions);
+
     // Create email lookup index
     await this.kv.setJSON(
       this.buildKey('user', 'email', user.email),

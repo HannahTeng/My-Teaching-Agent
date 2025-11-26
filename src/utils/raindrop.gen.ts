@@ -9,6 +9,6 @@ export interface Env {
   annotation: Annotation<Omit<MRNObject, 'type' | 'applicationName' | 'versionId'>>;
   KV_CACHE: KvCache;
   logger: Logger;
-  // mem: KvCache;
+  mem: KvCache;
   tracer: Tracer;
 }

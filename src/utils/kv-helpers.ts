@@ -6,7 +6,21 @@ export interface KVCache {
 }
 
 export class KVHelpers {
-  constructor(private kv: KVCache) {}
+  // constructor(private kv: KVCache) {}
+
+  constructor(private kv: KVCache, private prefix: string = "") {}
+
+  private buildKey(key: string) {
+    return this.prefix ? `${this.prefix}:${key}` : key;
+  }
+
+  /**
+   * Get raw string value
+   */
+  async get(key: string): Promise<string | null> {
+    return this.buildKey(key);
+    //return await this.kv.get(this.buildKey(key));
+  }
 
   /**
    * Get and parse JSON from KV storage
@@ -22,6 +36,18 @@ export class KVHelpers {
       return null;
     }
   }
+
+  /**
+   * Put raw string value
+   */
+  async put(
+    key: string,
+    value: string,
+    options?: { expirationTtl?: number }
+  ): Promise<void> {
+    await this.kv.put(this.buildKey(key), value, options);
+  }
+
 
   /**
    * Set JSON value in KV storage
