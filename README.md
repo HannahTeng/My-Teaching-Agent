@@ -305,7 +305,7 @@ KV Keys:
 
 Note: Use KV TTL (24 hours) to auto-delete old transcriptions.
 
-**6 Session (Student Learning Session)**
+**6 Session (Student Learning Session) (Done)**
 ```TypeScript
 export interface SessionProgress {
   currentSlideOrder: number; // Current position (0-indexed)
@@ -359,7 +359,7 @@ KV Keys:
 - active_session:{studentId}:{courseId} → Currently active session
 - course_sessions:{courseId}:{sessionId} → All sessions for a course
 
-**7 Interation (Q&A, Navigation, Highlights)**
+**7 Interation (Q&A, Navigation, Highlights) (Processing...)**
 ```TypeScript
 export interface InteractionData {
   // Question/Answer

@@ -14,16 +14,17 @@ import { Service } from '@liquidmetal-ai/raindrop-framework';
 
 const app = new Hono<{ Bindings: Env }>();
 
-// POST   /api/courses                    → Create course
-// GET    /api/courses/:id                → Get course
-// GET    /api/courses?teacherId=...      → List courses
-// PATCH  /api/courses/:id                → Update course
-// POST   /api/courses/:id/outline        → Update outline (Step 2)
-// POST   /api/courses/:id/slides         → Update slides (Step 3)
-// POST   /api/courses/:id/agent          → Update agent (Step 4)
-// POST   /api/courses/:id/publish        → Publish course
-// DELETE /api/courses/:id                → Delete course
-// GET    /api/courses/:id/agent          → Get agent info
+// POST   /api/slides                             → Create slide
+// POST   /api/slides/batch                       → Batch create
+// GET    /api/slides/:id                         → Get slide
+// GET    /api/courses/:courseId/slides           → List course slides
+// GET    /api/courses/:courseId/slides/:order    → Get slide by position
+// GET    /api/outline-nodes/:nodeId/slides       → List by outline node
+// PATCH  /api/slides/:id                         → Update slide
+// POST   /api/courses/:courseId/slides/reorder   → Reorder slides
+// POST   /api/slides/:id/duplicate               → Duplicate slide
+// DELETE /api/slides/:id                         → Delete slide
+// GET    /api/courses/:courseId/slides/count     → Count slides
 
 /**
  * POST /api/slides
@@ -216,10 +217,10 @@ app.get('/api/outline-nodes/:nodeId/slides', async (c) => {
 });
 
 /**
- * PUT /slides/:id
+ * PATCH /slides/:id
  * Update slide
  */
-app.put('/api/slides/:id', async (c) => {
+app.patch('/api/slides/:id', async (c) => {
   try {
     const slideId = c.req.param('id');
     const updates: UpdateSlideInput = await c.req.json();

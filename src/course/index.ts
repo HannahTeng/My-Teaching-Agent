@@ -173,10 +173,10 @@ app.delete('/api/courses/:id', async (c) => {
 });
 
 /**
- * PUT /api/courses/:id/publish
+ * PATCH /api/courses/:id/publish
  * Make course status to published
  */
-app.put('/api/courses/:id/publish', async (c) => {
+app.patch('/api/courses/:id/publish', async (c) => {
   try {
     const courseId = c.req.param('id');
 
@@ -203,10 +203,10 @@ app.put('/api/courses/:id/publish', async (c) => {
 });
 
 /**
- * PUT /courses/:id
+ * POST /courses/:id
  * Update course basic information
  */
-app.put('/api/courses/:id', async (c) => {
+app.post('/api/courses/:id', async (c) => {
   try {
     const courseId = c.req.param('id');
     const updates: UpdateCourseInput = await c.req.json();
@@ -251,10 +251,10 @@ app.put('/api/courses/:id', async (c) => {
 });
 
 /**
- * PUT /api/courses/:id/outline
+ * POST /api/courses/:id/outline
  * Update course outline (Step 2: after generation)
  */
-app.put('/api/courses/:id/outline', async (c) => {
+app.post('/api/courses/:id/outline', async (c) => {
   try {
     const courseId = c.req.param('id');
     const { outline } = await c.req.json();
@@ -284,10 +284,10 @@ app.put('/api/courses/:id/outline', async (c) => {
 
 
 /**
- * PUT /api/courses/slides/:id
+ * POST /api/courses/slides/:id
  * Update course slides (Step 3: after generation)
  */
-app.put('/api/courses/:id/slides', async (c) => {
+app.post('/api/courses/:id/slides', async (c) => {
   try {
     const courseId = c.req.param('id');
     const { slideIds } = await c.req.json();
@@ -320,7 +320,7 @@ app.put('/api/courses/:id/slides', async (c) => {
  * POST /courses/:id/agent
  * Update course agent (Step 4: after agent creation)
  */
-app.put('/api/courses/:id/agent', async (c) => {
+app.post('/api/courses/:id/agent', async (c) => {
   try {
     const courseId = c.req.param('id');
     const { agentId, voiceId } = await c.req.json();
