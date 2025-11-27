@@ -17,6 +17,10 @@ application "teaching-agent-app" {
     visibility = "public"
   }
 
+  service "session" {
+    visibility = "public"
+  }
+
   service "ai" {
     visibility = "private"
   }

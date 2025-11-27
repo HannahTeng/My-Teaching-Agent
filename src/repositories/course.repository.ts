@@ -335,5 +335,29 @@ export class CourseRepository {
     return updatedCourse;
   }
 
+  /**
+   * Increment student count
+   */
+  async incrementStudentCount(courseId: string): Promise<void> {
+    const course = await this.getById(courseId);
+    course.totalStudents += 1;
+    course.updatedAt = new Date().toISOString();
+
+    const courseKey = `${this.COURSE_PREFIX}${courseId}`;
+    await this.kv.put(courseKey, JSON.stringify(course));
+  }
+
+  /**
+   * Increment session count
+   */
+  async incrementSessionCount(courseId: string): Promise<void> {
+    const course = await this.getById(courseId);
+    course.totalSessions += 1;
+    course.updatedAt = new Date().toISOString();
+
+    const courseKey = `${this.COURSE_PREFIX}${courseId}`;
+    await this.kv.put(courseKey, JSON.stringify(course));
+  }
+
 
 }
