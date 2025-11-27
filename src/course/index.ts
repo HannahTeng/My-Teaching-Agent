@@ -10,6 +10,17 @@ import { NotFoundError, ValidationError, UnauthorizedError } from '../utils/erro
 import { Env } from '../utils/raindrop.gen';
 import { Service } from '@liquidmetal-ai/raindrop-framework';
 
+// POST   /api/courses                    → Create course
+// GET    /api/courses/:id                → Get course
+// GET    /api/courses?teacherId=...      → List courses
+// PATCH  /api/courses/:id                → Update course
+// POST   /api/courses/:id/outline        → Update outline (Step 2)
+// POST   /api/courses/:id/slides         → Update slides (Step 3)
+// POST   /api/courses/:id/agent          → Update agent (Step 4)
+// POST   /api/courses/:id/publish        → Publish course
+// DELETE /api/courses/:id                → Delete course
+// GET    /api/courses/:id/agent          → Get agent info
+
 const app = new Hono<{ Bindings: Env }>();
 /**
  * POST /courses

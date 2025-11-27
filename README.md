@@ -151,7 +151,7 @@ export interface GenerateOutlineResponse {
 ```
 Note: Outline is embedded in Course, not a separate entity. This aligns with your API where outline is generated and immediately used.
 
-**3 Slide (Individual Presentation Page) (Working on it...)**
+**3 Slide (Individual Presentation Page) (Done)**
 ```TypeScript
 export interface SlideContent {
   type: 'text' | 'heading' | 'bullet-points' | 'diagram' | 'image' | 'code' | 'quote';

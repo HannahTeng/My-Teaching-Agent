@@ -13,6 +13,10 @@ application "teaching-agent-app" {
     visibility = "public"
   }
 
+  service "slide" {
+    visibility = "public"
+  }
+
   service "ai" {
     visibility = "private"
   }
