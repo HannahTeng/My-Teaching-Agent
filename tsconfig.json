@@ -10,19 +10,20 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": false,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "jsx": "react",
     "lib": ["es2022"],
-    "module": "es2022",
-    "moduleDetection": "force",
-    "moduleResolution": "Bundler",
-    "noEmit": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmit": false,
     "noUncheckedIndexedAccess": true,
+    "rootDir": "src",
     "outDir": "dist",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022"
   },
-  "exclude": ["test"]
+  "include": ["src/**/*"],
+  "exclude": ["test", "node_modules"]
 }
